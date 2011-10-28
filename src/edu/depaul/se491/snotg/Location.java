@@ -18,10 +18,10 @@ public class Location
     private Key key;
 
     @Persistent
-    private double xCoordinate;
+    private double latitude;
     
     @Persistent
-    private double yCoordinate;
+    private double longitude;
     
     //TODO - ADD geo location.  I am not sure of data type to create now.
         
@@ -33,10 +33,10 @@ public class Location
     
     public Location() { super();}
     
-    public Location(Double _x, Double _y)
+    public Location(Double lat, Double longit)
     {
-    	this.xCoordinate = _x;
-    	this.yCoordinate = _y;
+    	this.latitude = lat;
+    	this.longitude = longit;
     }
     
     //TODO - add geoLoc constructor
@@ -47,20 +47,20 @@ public class Location
         return key;
     }
 
-    public double getxCoordinate() {
-		return xCoordinate;
+    public double getLatitude() {
+		return latitude;
 	}
 
-	public void setxCoordinate(double xCoordinate) {
-		this.xCoordinate = xCoordinate;
+	public void setLatitude(double xCoordinate) {
+		this.latitude = xCoordinate;
 	}
 
-	public double getyCoordinate() {
-		return yCoordinate;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setyCoordinate(double yCoordinate) {
-		this.yCoordinate = yCoordinate;
+	public void setLongitude(double yCoordinate) {
+		this.longitude = yCoordinate;
 	}
 
 	public Timestamp getLastUpdated() {

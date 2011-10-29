@@ -21,7 +21,7 @@ public class GatherData extends HttpServlet
 		HttpSession _session = request.getSession(true);
 		String user = "snotg";
 		//get user info from backing store
-		PersistenceManager pm = PMF.getPM();
+		PersistenceManager pm = PMF.get().getPersistenceManager();
 		String query = "select from " + User.class.getName() + " where user == '"+user+"'";
 		List<User> users = (List<User>) pm.newQuery(query).execute();
 		for (User u : users)

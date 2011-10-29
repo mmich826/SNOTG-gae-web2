@@ -48,7 +48,7 @@ public class CheckStatus extends HttpServlet
 			{
 				//create a new record of the phone
 				User phone = new User(user);
-				PersistenceManager pm = PMF.get().getPersistenceManager();
+				PersistenceManager pm = PMF.getPM();
 				try 
 				{
 				    pm.makePersistent(phone);
@@ -78,7 +78,7 @@ public class CheckStatus extends HttpServlet
 	@SuppressWarnings("unchecked")
 	public boolean isFirstTime(String _user)
 	{
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = PMF.getPM();
 		String query = "select from " + User.class.getName() + " where user == '"+_user+"'";
 		List<User> phones = (List<User>) pm.newQuery(query).execute();
 		if (phones.isEmpty())
@@ -90,7 +90,7 @@ public class CheckStatus extends HttpServlet
 	@SuppressWarnings("unchecked")
 	private String buildGeneralResponse(String _user)
 	{
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = PMF.getPM();
 		String query = "select from " + User.class.getName() + " where user == '"+_user+"'";
 		List<User> phones = (List<User>) pm.newQuery(query).execute();
 		StringBuilder sb = new StringBuilder();
@@ -114,7 +114,7 @@ public class CheckStatus extends HttpServlet
 	private void updateData(String _user, String _time, double _x, double _y)
 	{
 		//update the new time and location send from the headers
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		PersistenceManager pm = PMF.getPM();
 		User phone = null;
 		String query = "select from " + User.class.getName() + " where user == '"+_user+"'";
 		List<User> phones = (List<User>) pm.newQuery(query).execute();
@@ -124,7 +124,7 @@ public class CheckStatus extends HttpServlet
 			
 		}
 		
-		PersistenceManager pmm = PMF.get().getPersistenceManager();
+		PersistenceManager pmm = PMF.getPM();
 		Query query2 = pmm.newQuery(User.class);
 		query2.deletePersistentAll();
 		

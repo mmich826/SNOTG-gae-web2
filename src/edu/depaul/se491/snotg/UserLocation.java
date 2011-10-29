@@ -1,9 +1,13 @@
 package edu.depaul.se491.snotg;
 
+import java.sql.Timestamp;
+
+import javax.jdo.annotations.EmbeddedOnly;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.persistence.Embedded;
 
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
@@ -17,9 +21,15 @@ public class UserLocation
 
     @Persistent
     private String userName;
-    
+
     @Persistent
-    private Location loc;
+    private Timestamp lastUpdated;
+
+    @Persistent
+    @Embedded
+    private Loc loc;
+    
+    
     
     public UserLocation() { super();}
     
@@ -34,7 +44,7 @@ public class UserLocation
     	this.userName = usrName;
     }
     
-    public UserLocation(Key key, String usrName, Location loc)
+    public UserLocation(Key key, String usrName, Loc loc)
     {
     	this.key = key;
     	this.userName = usrName;
@@ -60,12 +70,54 @@ public class UserLocation
     {
     	return userName;
     }
+	
+	public Timestamp getLastUpdated() {
+		return lastUpdated;
+	}
 
-	public Location getLoc() {
+	public void setLastUpdated(Timestamp lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+	
+	public Loc getLoc() {
 		return loc;
 	}
 
-	public void setLoc(Location loc) {
+	public void setLoc(Loc loc) {
 		this.loc = loc;
 	}
+
+	 	@PersistenceCapable
+	    @EmbeddedOnly
+		public static class Loc 
+		{
+		    @Persistent
+		    private double latitude;
+		    
+		    @Persistent
+		    private double longitude;
+		    
+		    
+		    public Loc(double lat, double longit) {
+		    	this.latitude = lat;
+		    	this.longitude = longit;
+		    }
+	
+		    public double getLatitude() {
+				return latitude;
+			}
+	
+			public void setLatitude(double xCoordinate) {
+				this.latitude = xCoordinate;
+			}
+	
+			public double getLongitude() {
+				return longitude;
+			}
+	
+			public void setLongitude(double yCoordinate) {
+				this.longitude = yCoordinate;
+			}
+		}
+
 }

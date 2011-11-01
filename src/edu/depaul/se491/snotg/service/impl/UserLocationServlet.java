@@ -9,10 +9,12 @@ import javax.servlet.http.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.repackaged.org.json.JSONArray;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 
 import edu.depaul.se491.snotg.UserLocation;
+import edu.depaul.se491.snotg.UserLocation.Loc;
 import edu.depaul.se491.snotg.UserProfile;
 import edu.depaul.se491.snotg.manager.UserLocationManager;
 import edu.depaul.se491.snotg.manager.UserManager;
@@ -27,26 +29,31 @@ public class UserLocationServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
               throws IOException {
        
-		/*com.google.appengine.api.users.UserService userService = UserServiceFactory.getUserService();
+		/*FOR AUTH com.google.appengine.api.users.UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();*/
 
         List<UserLocation> userLocs = userLocMgr.getUserLocations();
         
+        JSONArray jList = new JSONArray();
         String jsonText = null;
         try {
-			JSONObject obj=new JSONObject();
-			obj.put("msg","Response from GAE User Service - ");
-			obj.put("ts",new Date().toString());
-			//obj.put("num",new Integer(100));
-			//obj.put("balance",new Double(1000.21));
-			//obj.put("is_vip",new Boolean(true));
-			//obj.put("nickname",null);
+			JSONObject obj;
+			for(UserLocation l : userLocs) {
+				obj = new JSONObject();
+				obj.put("key", l.getKey().toString());
+				obj.put("username", l.getUserName());
+				obj.put("lastupdated", l.getLastUpdated());
+				Loc loc = l.getLoc();
+				if (loc != null) {
+					obj.put("latitude", l.getLoc().getLatitude());
+					obj.put("longitude", l.getLoc().getLongitude());
+				}
+				jList.put(obj);
+			}
 			StringWriter out = new StringWriter();
-			obj.write(out);
+			jList.write(out);
 			jsonText = out.toString();
-			System.out.print(jsonText);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         

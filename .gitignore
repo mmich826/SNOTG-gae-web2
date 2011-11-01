@@ -1,0 +1,5 @@
+
+/war/WEB-INF/classes/META-INF/jdoconfig.xml
+/war/WEB-INF/classes/edu/depaul/se491/snotg/.gitignore
+/war/WEB-INF/classes/guestbook/.gitignore
+/war/WEB-INF/classes/log4j.properties

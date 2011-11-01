@@ -14,3 +14,6 @@ choose the one with the 'g' icon).
   7a.  Try url:  http://localhost:8888/guestbook.jsp?guestbookName=mike to create a different guestbook
   7b.  Try url:   http://localhost:8888 and click the 'guestbook' link.  This will execute the login process.  NOTE:
         once deployed to cloud GAE will the actual Google auth service be excecuted.
+
+		
+		

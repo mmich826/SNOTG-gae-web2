@@ -3,6 +3,7 @@ package edu.depaul.se491.snotg.dao;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -23,38 +24,40 @@ import edu.depaul.se491.snotg.UserLocation.Loc;
 
 public class PopulateData {
 
- 
-    public void populateUserLocation() {
+	private final static Logger LOGGER = Logger.getLogger("PopulateData");
+
+	public void populateUserLocation() {
     	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         
-		long t = new Timestamp(new Date().getTime()).getTime();
+		long t = new Date().getTime();
     	long m = 2*60*1000;
+    	UserLocation usrLoc = null;
     	
 		Loc loc = new Loc(41.9249, -87.6550);
 		Key usrLocKey = KeyFactory.createKey("UserLocation", 456L);
-		UserLocation usrLoc = new UserLocation(usrLocKey, "mike", loc);	 
+		usrLoc = new UserLocation(usrLocKey, "mike", loc);	 
 		usrLoc.setLastUpdated( new Date(t+m));
 		save(usrLoc);
 		
 		Loc loc1 = new Loc(41.9333, -87.6550);
 		Key usrLocKey1 = KeyFactory.createKey("UserLocation", 123L);
-		UserLocation usrLoc1 = new UserLocation(usrLocKey1, "daveyjones", loc1);	 
-		usrLoc1.setLastUpdated( new Timestamp(t+m*2));
-		save(usrLoc1);
+		usrLoc = new UserLocation(usrLocKey1, "daveyjones", loc1);	 
+		usrLoc.setLastUpdated( new Date(t+m*2));
+		save(usrLoc);
 		
 		Loc loc2 = new Loc(41.92343, -88.00123);
 		Key usrLocKey2 = KeyFactory.createKey("UserLocation", 333L);
-		UserLocation usrLoc2 = new UserLocation(usrLocKey2, "freddie Merc", loc2);	 
-		usrLoc2.setLastUpdated( new Timestamp(t+m*3));
-		save(usrLoc2);
+		usrLoc = new UserLocation(usrLocKey2, "freddie Merc", loc2);	 
+		usrLoc.setLastUpdated( new Date(t+m*3));
+		save(usrLoc);
 		
 		Loc loc3 = new Loc(41.9333, -87.6550);
 		Key usrLocKey3 = KeyFactory.createKey("UserLocation", 789L);
-		UserLocation usrLoc3 = new UserLocation(usrLocKey3, "WillieNelson", loc3);	 
-		usrLoc3.setLastUpdated( new Timestamp(t+m*4));
-		save(usrLoc3);		
+		usrLoc = new UserLocation(usrLocKey3, "WillieNelson", loc3);	 
+		usrLoc.setLastUpdated( new Date(t+m*4));
+		save(usrLoc);
 		
-		System.out.println("--------> ");
+		LOGGER.info("populateUserLocation data executed.");
 
     }
 

@@ -22,6 +22,7 @@ public class UserLocation
     @Persistent
     private String userName;
 
+    @Persistent
     private Date lastUpdated;
 
     @Persistent

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.*;
 import com.google.appengine.api.users.User;
@@ -24,10 +25,13 @@ import edu.depaul.se491.snotg.manager.impl.UserManagerImpl;
 
 public class PopulateDataServlet extends HttpServlet {
 
+	private final static Logger LOGGER = Logger.getLogger("PopulateDataServlet");
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
               throws IOException {
        
+		LOGGER.info("PopulateDataServlet invoked");
+		
         PopulateData dataSeeder = new PopulateData();
         dataSeeder.populateUserLocation();
         

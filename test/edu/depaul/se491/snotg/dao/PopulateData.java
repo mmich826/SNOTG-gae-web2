@@ -7,62 +7,54 @@ import java.util.Date;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
+import org.junit.Test;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-
-import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit;
-import com.google.appengine.api.datastore.Query;
 import com.google.appengine.repackaged.org.json.JSONArray;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-import edu.depaul.se491.snotg.Location;
 import edu.depaul.se491.snotg.PMF;
 import edu.depaul.se491.snotg.UserLocation;
 import edu.depaul.se491.snotg.UserLocation.Loc;
 
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 public class PopulateData {
 
-    private LocalServiceTestHelper helper;
-
-    @Before
-    public void setUp() {
-        helper.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        helper.tearDown();
-    }
-
  
-    public PopulateData() {
-    	LocalDatastoreServiceTestConfig config = new LocalDatastoreServiceTestConfig();
-    	config.setBackingStoreLocation("C:/git_sandbox/SNOTG-gae-web2/war/WEB-INF/appengine-generated");
-    	config.setNoStorage(false);
-    	helper = new LocalServiceTestHelper(config);
-    }
-
-    @Test
-    public void addUserProfileTest() {
+    public void populateUserLocation() {
     	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         
+		long t = new Timestamp(new Date().getTime()).getTime();
+    	long m = 2*60*1000;
+    	
 		Loc loc = new Loc(41.9249, -87.6550);
 		Key usrLocKey = KeyFactory.createKey("UserLocation", 456L);
-		UserLocation usrLoc = new UserLocation(usrLocKey, "mike", loc);	  
-		
+		UserLocation usrLoc = new UserLocation(usrLocKey, "mike", loc);	 
+		usrLoc.setLastUpdated( new Date(t+m));
 		save(usrLoc);
+		
+		Loc loc1 = new Loc(41.9333, -87.6550);
+		Key usrLocKey1 = KeyFactory.createKey("UserLocation", 123L);
+		UserLocation usrLoc1 = new UserLocation(usrLocKey1, "daveyjones", loc1);	 
+		usrLoc1.setLastUpdated( new Timestamp(t+m*2));
+		save(usrLoc1);
+		
+		Loc loc2 = new Loc(41.92343, -88.00123);
+		Key usrLocKey2 = KeyFactory.createKey("UserLocation", 333L);
+		UserLocation usrLoc2 = new UserLocation(usrLocKey2, "freddie Merc", loc2);	 
+		usrLoc2.setLastUpdated( new Timestamp(t+m*3));
+		save(usrLoc2);
+		
+		Loc loc3 = new Loc(41.9333, -87.6550);
+		Key usrLocKey3 = KeyFactory.createKey("UserLocation", 789L);
+		UserLocation usrLoc3 = new UserLocation(usrLocKey3, "WillieNelson", loc3);	 
+		usrLoc3.setLastUpdated( new Timestamp(t+m*4));
+		save(usrLoc3);		
+		
+		System.out.println("--------> ");
 
     }
 
@@ -145,10 +137,10 @@ public class PopulateData {
 		return foundUsrLoc;
 	}
 	
-	private void save(UserLocation usrLoc) {
+	private void save(UserLocation userLocat) {
 		PersistenceManager pm = PMF.getFactory().getPersistenceManager();  
 		try {  
-			  pm.makePersistent(usrLoc);  
+			  pm.makePersistent(userLocat);  
 		} finally {  
 			pm.close();  
 		} 

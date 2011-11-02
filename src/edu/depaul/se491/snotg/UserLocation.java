@@ -1,6 +1,7 @@
 package edu.depaul.se491.snotg;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.jdo.annotations.EmbeddedOnly;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -9,7 +10,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Embedded;
 
-import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(detachable="true")
@@ -22,8 +22,7 @@ public class UserLocation
     @Persistent
     private String userName;
 
-    @Persistent
-    private Timestamp lastUpdated;
+    private Date lastUpdated;
 
     @Persistent
     @Embedded
@@ -71,12 +70,12 @@ public class UserLocation
     	return userName;
     }
 	
-	public Timestamp getLastUpdated() {
+	public Date getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(Timestamp lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setLastUpdated(Date date) {
+		this.lastUpdated = date;
 	}
 	
 	public Loc getLoc() {

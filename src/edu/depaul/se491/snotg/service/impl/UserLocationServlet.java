@@ -34,6 +34,11 @@ public class UserLocationServlet extends HttpServlet {
 
         List<UserLocation> userLocs = userLocMgr.getUserLocations();
         
+        if (userLocs == null || userLocs.size() == 0) {
+        	resp.getWriter().println("[]");
+        	return;
+        }
+        
         JSONArray jList = new JSONArray();
         String jsonText = null;
         try {

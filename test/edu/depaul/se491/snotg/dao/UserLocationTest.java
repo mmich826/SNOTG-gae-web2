@@ -82,6 +82,47 @@ public class UserLocationTest {
     }
 	
 	@Test
+	public void queryTest() {
+    	DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+        
+		long t = new Date().getTime();
+    	long m = 2*60*1000;
+    	UserLocation usrLoc = null;
+    	
+		Loc loc = new Loc(41.9249, -87.6550);
+		Key usrLocKey = KeyFactory.createKey("UserLocation", 456L);
+		usrLoc = new UserLocation(usrLocKey, "mike", loc);	 
+		usrLoc.setLastUpdated( new Date(t+m));
+		save(usrLoc);
+		
+		Loc loc1 = new Loc(41.9333, -87.6550);
+		Key usrLocKey1 = KeyFactory.createKey("UserLocation", 123L);
+		usrLoc = new UserLocation(usrLocKey1, "daveyjones", loc1);	 
+		usrLoc.setLastUpdated( new Date(t+m*2));
+		save(usrLoc);
+		
+		Loc loc2 = new Loc(41.92343, -88.00123);
+		Key usrLocKey2 = KeyFactory.createKey("UserLocation", 333L);
+		usrLoc = new UserLocation(usrLocKey2, "freddie Merc", loc2);	 
+		usrLoc.setLastUpdated( new Date(t+m*3));
+		save(usrLoc);
+		
+		PersistenceManager pm = PMF.getFactory().getPersistenceManager(); 
+		UserLocation foundUsrLoc = null;
+		boolean notFound = false;  
+		try {  
+			   foundUsrLoc = pm.getObjectById(UserLocation.class, usrLocKey);  
+			   foundUsrLoc.getLoc(); // lazily loaded.  Must call embedded obj getters here to load before closing pm
+
+		} catch (JDOObjectNotFoundException e) {  
+			notFound = true;  
+		} finally {  
+		 pm.close();  
+		}  
+		
+	}
+	
+	@Test
     public void deleteTest() {
     	PersistenceManager pm;  
         

@@ -20,7 +20,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>	
 	<servlet-mapping>
 		<servlet-name>UserLocationService</servlet-name>
-		<url-pattern>/userlocation</url-pattern>
+		<url-pattern>/user_locations</url-pattern>
 	</servlet-mapping>	
 	
 	<servlet>

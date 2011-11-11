@@ -102,27 +102,12 @@ public class UserLocationServlet extends HttpServlet {
 	 * This takes and save the current users location and returns
 	 * the list of active user geo locations (as with get_user_locs call).
 	 */
-	private String handleHeartbeat(HttpServletRequest req) {
+	private String handleHeartbeat(HttpServletRequest req) throws JsonParseException, JsonMappingException, IOException {
 		UserLocation userLoc = null;
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 //			UserLocationJson user = mapper.readValue(jsonString.getBytes(), UserLocationJson.class);			
-			//mapper.writeValue(System.out, user); // where 'dst' can be File, OutputStream or Writer
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}     
-		/*userLoc = new UserLocation();
-		userLoc.setUserName("mike");
-		UserLocation.Loc loc = new UserLocation.Loc(123.1234, 555.4444);
-		userLoc.setLoc(loc);*/
+		//mapper.writeValue(System.out, user); // where 'dst' can be File, OutputStream or Writer
 		
 		userLocMgr.updateUserLocation(userLoc);
 		

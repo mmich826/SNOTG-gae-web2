@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 
-class UserLocationJson {
+public class UserLocationJson {
 	String userName;
 	BigDecimal latit;
 	BigDecimal longit;

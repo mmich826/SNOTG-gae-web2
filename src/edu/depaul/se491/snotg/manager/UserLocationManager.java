@@ -7,7 +7,7 @@ import edu.depaul.se491.snotg.UserProfile;
 
 public interface UserLocationManager {
 	
-	public void updateUserLocation(UserLocation userLog);
+	public void updateUserLocation(UserLocation userLoc);
 	public List<UserLocation> getUserLocations();
 	
 }

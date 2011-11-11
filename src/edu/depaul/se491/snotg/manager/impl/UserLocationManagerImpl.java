@@ -22,8 +22,8 @@ public class UserLocationManagerImpl implements UserLocationManager {
 	}
 	
 	@Override
-	public void updateUserLocation(UserLocation userLog) {
-		// TODO Auto-generated method stub
+	public void updateUserLocation(UserLocation userLoc) {
+		userLocDao.updateUserLocation(userLoc);
 
 	}
 

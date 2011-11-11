@@ -1,6 +1,7 @@
 package edu.depaul.se491.snotg.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -10,9 +11,9 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Query;
 
 import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit;
-import com.google.appengine.api.datastore.Query;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
@@ -119,6 +120,23 @@ public class UserLocationTest {
 		} finally {  
 		 pm.close();  
 		}  
+		
+		// Test via query
+		pm = PMF.getFactory().getPersistenceManager();
+		List<UserLocation> results = null;
+		try {
+			javax.jdo.Query query = pm.newQuery(UserLocation.class,
+					"userName == userNameParam");
+			query.declareParameters("String userNameParam");
+			
+			results = (List<UserLocation>) query.execute("daveyjones");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(results);
+		assertTrue(results.size() == 1);
+		assertTrue(results.get(0).getUserName().equalsIgnoreCase("daveyjones"));
 		
 	}
 	

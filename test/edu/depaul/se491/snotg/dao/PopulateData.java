@@ -57,6 +57,12 @@ public class PopulateData {
 		usrLoc.setLastUpdated( new Date(t+m*4));
 		save(usrLoc);
 		
+		Loc loc4 = new Loc(41.999, -87.699);
+		Key usrLocKey4 = KeyFactory.createKey("UserLocation", 916L);
+		usrLoc = new UserLocation(usrLocKey4, "mmich8266", loc4);	 
+		usrLoc.setLastUpdated( new Date(t+m*5));
+		save(usrLoc);
+		
 		LOGGER.info("populateUserLocation data executed.");
 
     }

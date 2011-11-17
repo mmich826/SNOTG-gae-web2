@@ -46,4 +46,11 @@ public class JsonTest {
 		}
 	}
 
+	@Test
+	public void parseUsernameFromGoogleAccount() {
+		String acct = "mmich8266@gmail.com";
+		
+		String username = acct.substring(0, acct.indexOf("@"));
+		assertEquals("mmich8266", username);
+	}
 }

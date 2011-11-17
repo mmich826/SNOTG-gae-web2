@@ -94,7 +94,7 @@ public class UserLocationServlet extends HttpServlet {
 	}
 	
 	/*
-	 * user_locations?heartbeat 
+	 * user_locations?user_heartbeat 
 	 * This takes and save the current users location and returns
 	 * the list of active user geo locations (as with get_user_locs call).
 	 */
